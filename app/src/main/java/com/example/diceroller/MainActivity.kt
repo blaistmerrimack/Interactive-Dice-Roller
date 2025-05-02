@@ -10,6 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.ui.res.stringResource
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -45,6 +47,8 @@ fun DiceWithButtonAndImage(modifier: Modifier = Modifier
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Image(painter = painterResource(R.drawable.dice_1),
+            contentDescription = "1")
         Button(onClick = { /*TODO*/ }) {
             Text(stringResource(R.string.roll))
         }
