@@ -1,6 +1,10 @@
 # Interactive-Dice-Roller
 Interactive Dice Roller Application Using Android Studio/Jetpack Compose
 
+<p align="left">
+  <img src="https://github.com/user-attachments/assets/bb66bc1e-d6bb-466e-8af8-d57bcb4c7fe6" width="300"/>
+</p>
+
 ## Prerequisites
 
 Make sure you have the following installed:
