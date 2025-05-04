@@ -26,6 +26,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.runtime.LaunchedEffect
 
 
 class MainActivity : ComponentActivity() {
@@ -52,6 +56,9 @@ fun DiceWithButtonAndImage(modifier: Modifier = Modifier
     .wrapContentSize(Alignment.Center)
 ) {
     var result by remember { mutableStateOf(1) }
+    var dieIsRolling by remember { mutableStateOf(false) }
+    val rotationAnimation = remember { Animatable(0f) }
+
     val imageResource = when (result) {
         1 -> R.drawable.dice_1
         2 -> R.drawable.dice_2
@@ -60,14 +67,33 @@ fun DiceWithButtonAndImage(modifier: Modifier = Modifier
         5 -> R.drawable.dice_5
         else -> R.drawable.dice_6
     }
+
+    LaunchedEffect (dieIsRolling) {
+        if (dieIsRolling) {
+            rotationAnimation.animateTo(
+                targetValue = 360f,
+                animationSpec = tween(durationMillis = 500)
+            )
+
+            rotationAnimation.snapTo(0f)
+            result = (1..6).random()
+            dieIsRolling = false
+        }
+    }
+
     Column (
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(painter = painterResource(imageResource),
-            contentDescription = result.toString())
+            contentDescription = result.toString(),
+            modifier = Modifier
+                .graphicsLayer {
+                    rotationZ = rotationAnimation.value
+                }
+        )
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { result = (1..6).random() }) {
+        Button(onClick = { if (!dieIsRolling) dieIsRolling = true }) {
             Text(stringResource(R.string.roll))
         }
     }
